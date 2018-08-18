@@ -23,7 +23,6 @@ computed: {
 ```sh
 onTouchMove: function onTouchMove(event) {
   if (this.disabled) return;
-
   this.touchMove(event);
   var rect = this.$el.getBoundingClientRect();
   var diff = this.deltaX / rect.width * (this.max-this.min+1);//这里是修改的地方
