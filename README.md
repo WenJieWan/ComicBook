@@ -7,6 +7,7 @@ a free comic book app
 #要修改的文件地址（node_modules/vant/lib/slider/index.js）
 #具体的代码修改地方如下：
 1.对显示的百分比进度条重新计算
+<code>
 computed: {
     barStyle: function barStyle() {
       return {
@@ -15,7 +16,9 @@ computed: {
       };
     }
   },
+</code>
   2.修改滑动监听
+  <code>
   onTouchMove: function onTouchMove(event) {
       if (this.disabled) return;
 
@@ -24,6 +27,7 @@ computed: {
       var diff = this.deltaX / rect.width * (this.max-this.min+1);//这里是修改的地方
       this.updateValue(this.startValue + diff);
     },
+	</code>
 	3.修改点击事件
 	onClick: function onClick(event) {
       if (this.disabled) return;
@@ -32,15 +36,16 @@ computed: {
       this.updateValue(value, true);
     },
 	4.修改更新数值
+	<code>
 	format: function format(value) {
       var correctVal = Math.round(Math.max(this.min, Math.min(value, this.max)) / this.step) * this.step;//这里是修改的地方
       return correctVal==this.min?0:correctVal;//这里是修改的地方
     }
-	
+	</code>
 	#改了完了npm run dev打开并不能请求数据成功，因为涉及跨域问题
 	#为了解决跨域，需要建立一个http代理
 	#下面是基于httpProxy模块实现的代理的具体代码（proxyweb.js）
-	```
+	<code>
 var http = require("http");
 var httpProxy = require('http-proxy'); 
 var proxy = httpProxy.createProxyServer({});
@@ -63,12 +68,12 @@ function proxyer(req,res,next){
 }
 console.log("proxy listening on port 8765") 
 app.listen(8765);
-	```
+</code>
     #终端执行命令：
-	```
+	<code>
 	npm install
 	node proxyweb.js
-	```
+	</code>
 	#记得在项目中src下的httpServer.js进行修改请求地址
     baseURL: "http://{运行请求代理的服务器ip地址}:8765/"
 	#到此即可运行项目了，build后可以将生产文件在hubilder下打包成app使用
